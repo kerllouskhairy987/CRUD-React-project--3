@@ -27,7 +27,7 @@ function ProductCard({ }: IProps) {
             </div>
 
             <div className="flex space-x-2 items-center mt-5">
-                <Button className="bg-indigo-700">EDIT</Button>
+                <Button className="bg-indigo-700" onClick={() => console.log("clicked")}>EDIT</Button>
                 <Button className="bg-red-700">DELETE</Button>
             </div>
 
