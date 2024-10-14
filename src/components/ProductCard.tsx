@@ -1,4 +1,5 @@
 import { IProduct } from "../Interfaces";
+import { txtSlicer } from "../Utils/function";
 import Image from "./Image";
 import Button from "./ui/Button";
 
@@ -13,10 +14,10 @@ function ProductCard({ product }: IProps) {
             <Image imageUrl={imageURL} alt={title}
             className="rounded-t-md mb-3" />
 
-            <h3 className="font-bold pb-1">{title}</h3>
+            <h3 className="font-bold pb-1">{txtSlicer(title, 30)}</h3>
 
 
-            <p className="line-clamp-3"> {description} </p>
+            <p> {txtSlicer(description)} </p>
 
             <div className="flex items-center space-x-2 my-3">
                 <span className="w-5 h-5 bg-indigo-400 rounded-full cursor-pointer" />
