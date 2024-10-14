@@ -1,4 +1,5 @@
 import Image from "./Image";
+import Button from "./ui/Button";
 
 interface IProps {
 
@@ -26,8 +27,8 @@ function ProductCard({ }: IProps) {
             </div>
 
             <div className="flex space-x-2 items-center mt-5">
-                <button className="bg-indigo-700 text-white rounded-md grow p-3">EDIT</button>
-                <button className="bg-red-700 text-white rounded-md grow p-3">DELETE</button>
+                <Button className="bg-indigo-700">EDIT</Button>
+                <Button className="bg-red-700">DELETE</Button>
             </div>
 
         </div>
