@@ -8,11 +8,11 @@ interface IProps {
 }
 
 function ProductCard({ product }: IProps) {
-    const {title, description, imageURL, price} = product;
+    const {title, description, imageURL, price, category} = product;
     return (
-        <div className="border rounded-md p-2 flex flex-col">
+        <div className="mx-auto md:mx-0 max-w-sm border rounded-md p-2 flex flex-col hover:scale-105 transition-all">
             <Image imageUrl={imageURL} alt={title}
-            className="rounded-t-md mb-3" />
+            className="rounded-t-md mb-3 h-48 object-cover" />
 
             <h3 className="font-bold pb-1">{txtSlicer(title, 30)}</h3>
 
@@ -27,7 +27,7 @@ function ProductCard({ product }: IProps) {
 
             <div className="flex items-center justify-between">
                 <span> ${price} </span>
-                <img className="w-10 h-10 rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzYznft0Ba7f21dUGUlwMdK-zSYuN63M2qNw&s" alt="Car Image" />
+                <img className="w-10 h-10 rounded-full" src={category.imageURL} alt={category.name} />
             </div>
 
             <div className="flex space-x-2 items-center mt-5">

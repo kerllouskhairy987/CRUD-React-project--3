@@ -5,7 +5,7 @@ interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 function Button({ children, className, width = "w-full", ...rest}: IProps) {
-    return <button className={`${className} ${width} text-white rounded-md p-3`} {...rest}> {children} </button>
+    return <button className={`${className} ${width} text-white rounded-md p-3 active:scale-95 hover:opacity-90 transition-all`} {...rest}> {children} </button>
 }
 
 export default Button;
