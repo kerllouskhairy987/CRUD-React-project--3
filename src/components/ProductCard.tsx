@@ -8,16 +8,16 @@ interface IProps {
 }
 
 function ProductCard({ product }: IProps) {
-    const {title, description, imageURL, price, category} = product;
+    const { title, description, imageURL, price, category } = product;
     return (
         <div className="mx-auto md:mx-0 max-w-sm border rounded-md p-2 flex flex-col hover:scale-105 transition-all">
             <Image imageUrl={imageURL} alt={title}
-            className="rounded-t-md mb-3 h-48 object-cover" />
+                className="rounded-t-md mb-3 h-52 lg:object-cover" />
 
-            <h3 className="font-bold pb-1">{txtSlicer(title, 30)}</h3>
+            <h3 className="font-semibold text-lg pb-1">{txtSlicer(title, 30)}</h3>
 
 
-            <p> {txtSlicer(description)} </p>
+            <p className="text-gray-500 text-sm"> {txtSlicer(description)} </p>
 
             <div className="flex items-center space-x-2 my-3">
                 <span className="w-5 h-5 bg-indigo-400 rounded-full cursor-pointer" />
