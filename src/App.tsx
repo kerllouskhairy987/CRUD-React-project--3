@@ -1,8 +1,9 @@
 import { useState } from "react";
 import ProductCard from "./components/ProductCard";
 import Modal from "./components/ui/Modal";
-import { productList } from "./data";
+import { formInputsList, productList } from "./data";
 import Button from "./components/ui/Button";
+import { Input } from "@headlessui/react";
 
 
 function App() {
@@ -22,6 +23,14 @@ function App() {
   // ** Renders
   const renderProductList = productList.map((item) => <ProductCard key={item.id} product={item} />)
 
+  const renderFormInputList = formInputsList.map((input) =>
+    <div key={input.id} className="flex flex-col">
+      <label htmlFor={input.id} className="font-medium text-sm text-gray-700 mb-[2px]">{input.label}</label>
+      <Input type={input.type} id={input.id} name={input.name}
+        className="border-[1px] border-gray-300 shadow-md focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 rounded-lg text-lg p-3"
+      />
+    </div>)
+
   return (
     <main className="container">
       <Button className="bg-indigo-700 hover:bg-indigo-800" onClick={open}>ADD TASK</Button>
@@ -31,10 +40,13 @@ function App() {
       </div>
 
       <Modal isOpen={isOpen} close={close} title="ADD A NEW PRODUCT" >
-        <div className="flex items-center space-x-4">
-          <Button className="bg-indigo-700 hover:bg-indigo-800">Submit</Button>
-          <Button className="bg-gray-300 hover:bg-gray-400">Cancel</Button>
-        </div>
+        <form className="space-y-3">
+          {renderFormInputList}
+          <div className="flex items-center space-x-3">
+            <Button className="bg-indigo-700 hover:bg-indigo-800">Submit</Button>
+            <Button className="bg-gray-400 hover:bg-gray-500">Cancel</Button>
+          </div>
+        </form>
       </Modal>
     </main>
   )
