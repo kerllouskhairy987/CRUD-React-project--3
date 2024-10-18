@@ -1,15 +1,28 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import ProductCard from "./components/ProductCard";
 import Modal from "./components/ui/Modal";
 import { formInputsList, productList } from "./data";
 import Button from "./components/ui/Button";
 import { Input } from "@headlessui/react";
+import { IProduct } from "./Interfaces";
 
 
 function App() {
 
   // ** States
-  let [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const [product, setProduct] = useState<IProduct>({
+    title: "",
+    description: "",
+    imageURL: "",
+    price: "",
+    colors: [],
+    category: {
+      name: "",
+      imageURL: "",
+    }
+  })
+
 
   // ** Handler
   function open() {
@@ -20,13 +33,26 @@ function App() {
     setIsOpen(false)
   }
 
+  const onChagneHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+    setProduct({
+      ...product,
+      [name]: value,
+    })
+  }
+
   // ** Renders
   const renderProductList = productList.map((item) => <ProductCard key={item.id} product={item} />)
 
   const renderFormInputList = formInputsList.map((input) =>
     <div key={input.id} className="flex flex-col">
       <label htmlFor={input.id} className="font-medium text-sm text-gray-700 mb-[2px]">{input.label}</label>
-      <Input type={input.type} id={input.id} name={input.name}
+      <Input
+        type={input.type}
+        id={input.id}
+        name={input.name}
+        value={product[input.name]}
+        onChange={onChagneHandler}
         className="border-[1px] border-gray-300 shadow-md focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 rounded-lg text-lg p-3"
       />
     </div>)
