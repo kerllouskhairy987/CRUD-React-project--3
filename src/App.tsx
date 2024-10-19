@@ -26,8 +26,10 @@ function App() {
 
   // ** States ** //
   const [isOpen, setIsOpen] = useState(false);
-  const [product, setProduct] = useState<IProduct>(defaultProductObj)
+  const [product, setProduct] = useState<IProduct>(defaultProductObj);
+  const [tempColor, setTemColor] = useState<string[]>([]);
   const [errors, setErrors] = useState({ title: "", description: "", imageURL: "", price: "" }); // Save Error Msg IN This State 
+  console.log(tempColor);
 
   // ** Handler ** //
   const open = () => setIsOpen(true)
@@ -103,8 +105,18 @@ function App() {
       <ErrorMassege msg={errors[input.name]} />
     </div>)
 
-  // Map on colors
-  const renderProductColor = colors.map(color => <CicleColor color={color} key={color} />)
+  // Map on circle colors
+  const renderProductColor = colors.map(color => <CicleColor color={color} key={color} onClick={() => {
+    if (tempColor.includes(color)) {
+      // Toggle the color
+      setTemColor(prev => prev.filter(item => item !== color))
+      return;
+    }
+    // Adding the color and prev color
+    setTemColor((prev) => [...prev, color])
+  }} />)
+  // Render color after choose them
+  const rendercolor = tempColor.map(clr => <span key={clr} className={`text-white text-xs rounded p-1 border`} style={{ backgroundColor: clr }}>{clr}</span>);
 
   return (
     <main className="container">
@@ -120,6 +132,10 @@ function App() {
 
           <div className="flex items-center space-x-1 my-3 flex-wrap">
             {renderProductColor}
+          </div>
+
+          <div className="flex flex-wrap space-x-1">
+            {rendercolor}
           </div>
 
           <div className="flex items-center space-x-3">

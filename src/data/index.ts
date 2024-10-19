@@ -65,7 +65,7 @@ export const productList: IProduct[] = [
     description:
       "As luxury T-Shirt is just as distinctive and can be trimmed with premium materials like Nappa leather and carbon fiber.",
     imageURL:
-    "https://images.unsplash.com/photo-1552831388-6a0b3575b32a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80",
+      "https://images.unsplash.com/photo-1552831388-6a0b3575b32a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80",
     price: "1500",
     colors: [],
     category: {
@@ -189,10 +189,9 @@ export const colors: string[] = [
   "#000000",
   "#645CBB",
   "#688CBB",
-  "#e5e7eb",
-  "#367Cgf",
-  "red",
-  "green",
+  "#234fff",
+  "#fe0000",
+  "#00ff22",
 ];
 
 // export const categories: ICategory[] = [
