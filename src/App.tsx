@@ -6,6 +6,7 @@ import Button from "./components/ui/Button";
 import { Input } from "@headlessui/react";
 import { IProduct } from "./Interfaces";
 import { productValidation } from "./validation";
+import ErrorMassege from "./components/ErrorMassege";
 
 
 function App() {
@@ -25,17 +26,21 @@ function App() {
   // ** States ** //
   const [isOpen, setIsOpen] = useState(false);
   const [product, setProduct] = useState<IProduct>(defaultProductObj)
+  const [errors, setErrors] = useState({ title: "", description: "", imageURL: "", price: "" }); // Save Error Msg IN This State 
 
   // ** Handler ** //
   const open = () => setIsOpen(true)
-
   const close = () => setIsOpen(false)
-
   const onChagneHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setProduct({
       ...product,
       [name]: value,
+    });
+    // to empty the validation when we write in the current input
+    setErrors({
+      ...errors,
+      [name]: "",
     })
   };
 
@@ -47,8 +52,36 @@ function App() {
 
   const onSubmitHandler = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    const errors = productValidation({title: product.title, description: product.description, imageURL: product.imageURL, price: product.price});
+    // Destracturing Product IN ES6 When we write title: title THIS equal to title 
+    const { title, description, imageURL, price } = product;
+    /*
+
+      title: title,
+      description: description,
+      imageURL: imageURL,
+      price: price
+
+      TOP is equal to BOTTOM
+
+      title,
+      description,
+      imageURL,
+      price
+
+    */
+    const errors = productValidation({ title, description, imageURL, price });
     console.log(errors);
+
+    // Handling the value of inputs 
+    const hasErrorMsg = Object.values(errors).some(value => value === "") && Object.values(errors).every(value => value === "");
+    if (!hasErrorMsg) {
+      // save the error msg in this state 
+      setErrors(errors);
+      return;
+    }
+
+    console.log("Send the product");
+
   }
 
   // ** Renders ** //
@@ -65,6 +98,8 @@ function App() {
         onChange={onChagneHandler}
         className="border-[1px] border-gray-300 shadow-md focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 rounded-lg text-lg p-3"
       />
+      {/* Render the Error Msg Blow the Input */}
+      <ErrorMassege msg={errors[input.name]} />
     </div>)
 
   return (

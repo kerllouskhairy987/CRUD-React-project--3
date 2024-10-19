@@ -15,9 +15,8 @@
  * @returns {string} errors.price - Error message for the product price, or an empty string if valid.
  */
 
-
 export const productValidation = (product: { title: string; description: string; imageURL: string; price: string }) => {
-    const errors: { title: string; description: string; imageURL: string; price: string; } = {
+    const errors: { title: string; description: string; imageURL: string; price: string } = {
         title: "",
         description: "",
         imageURL: "",
