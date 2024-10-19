@@ -1,12 +1,13 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import ProductCard from "./components/ProductCard";
 import Modal from "./components/ui/Modal";
-import { formInputsList, productList } from "./data";
+import { colors, formInputsList, productList } from "./data";
 import Button from "./components/ui/Button";
 import { Input } from "@headlessui/react";
 import { IProduct } from "./Interfaces";
 import { productValidation } from "./validation";
 import ErrorMassege from "./components/ErrorMassege";
+import CicleColor from "./components/CicleColor";
 
 
 function App() {
@@ -102,6 +103,9 @@ function App() {
       <ErrorMassege msg={errors[input.name]} />
     </div>)
 
+  // Map on colors
+  const renderProductColor = colors.map(color => <CicleColor color={color} key={color} />)
+
   return (
     <main className="container">
       <Button className="bg-indigo-700 hover:bg-indigo-800" onClick={open}>ADD TASK</Button>
@@ -113,6 +117,11 @@ function App() {
       <Modal isOpen={isOpen} close={close} title="ADD A NEW PRODUCT" >
         <form className="space-y-3" onSubmit={onSubmitHandler}>
           {renderFormInputList}
+
+          <div className="flex items-center space-x-1 my-3 flex-wrap">
+            {renderProductColor}
+          </div>
+
           <div className="flex items-center space-x-3">
             <Button className="bg-indigo-700 hover:bg-indigo-800">Submit</Button>
             <Button className="bg-gray-400 hover:bg-gray-500" onClick={onCancel}>Cancel</Button>
