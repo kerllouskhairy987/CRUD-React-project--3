@@ -5,6 +5,7 @@ import { formInputsList, productList } from "./data";
 import Button from "./components/ui/Button";
 import { Input } from "@headlessui/react";
 import { IProduct } from "./Interfaces";
+import { productValidation } from "./validation";
 
 
 function App() {
@@ -38,15 +39,16 @@ function App() {
     })
   };
 
-  const onSubmitHandler = (event: FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-    console.log(product);
-  }
-
   // TO close the modle and empty the inputs
   const onCancel = () => {
     setProduct(defaultProductObj);
     close();  // OR if you have many conditions make the state = false ==> setIsOpen(false)
+  }
+
+  const onSubmitHandler = (event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    const errors = productValidation({title: product.title, description: product.description, imageURL: product.imageURL, price: product.price});
+    console.log(errors);
   }
 
   // ** Renders ** //
