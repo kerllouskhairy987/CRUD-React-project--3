@@ -8,6 +8,7 @@ import { IProduct } from "./Interfaces";
 import { productValidation } from "./validation";
 import ErrorMassege from "./components/ErrorMassege";
 import CicleColor from "./components/CicleColor";
+import { v4 as uuid } from "uuid";
 
 
 function App() {
@@ -29,7 +30,8 @@ function App() {
   const [product, setProduct] = useState<IProduct>(defaultProductObj);
   const [tempColor, setTemColor] = useState<string[]>([]);
   const [errors, setErrors] = useState({ title: "", description: "", imageURL: "", price: "" }); // Save Error Msg IN This State 
-  console.log(tempColor);
+  const [products, setProducts] = useState<IProduct[]>(productList); // عملت الاستيت دي عشان اعرف اضيف علي الداتا لان الداتا كنت عاملها امبورت من الملف علي طول
+
 
   // ** Handler ** //
   const open = () => setIsOpen(true)
@@ -47,7 +49,7 @@ function App() {
     })
   };
 
-  // TO close the modle and empty the inputs
+  // TO close the modal and empty the inputs
   const onCancel = () => {
     setProduct(defaultProductObj);
     close();  // OR if you have many conditions make the state = false ==> setIsOpen(false)
@@ -55,7 +57,7 @@ function App() {
 
   const onSubmitHandler = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    // Destracturing Product IN ES6 When we write title: title THIS equal to title 
+    // Destructuring Product IN ES6 When we write title: title THIS equal to title 
     const { title, description, imageURL, price } = product;
     /*
 
@@ -82,13 +84,15 @@ function App() {
       setErrors(errors);
       return;
     }
-
-    console.log("Send the product");
-
+    // بدل م كنت بتبعت رساله لا دلوقتي اعملي ست ل ال برودكت و ابعت ال اي دي و ال كلرز
+    setProducts((prev) => [{ ...product, id: uuid(), colors: tempColor }, ...prev]);
+    setProduct(defaultProductObj); // To empty the inputs
+    setTemColor([]);               // To clear the circle color
+    close();                       // To close the modal
   }
 
   // ** Renders ** //
-  const renderProductList = productList.map((item) => <ProductCard key={item.id} product={item} />)
+  const renderProductList = products.map((item) => <ProductCard key={item.id} product={item} />)
 
   const renderFormInputList = formInputsList.map((input) =>
     <div key={input.id} className="flex flex-col">
@@ -114,7 +118,7 @@ function App() {
     }
     // Adding the color and prev color
     setTemColor((prev) => [...prev, color])
-  }} />)
+  }} />);
   // Render color after choose them
   const rendercolor = tempColor.map(clr => <span key={clr} className={`text-white text-xs rounded p-1 border`} style={{ backgroundColor: clr }}>{clr}</span>);
 
@@ -130,13 +134,9 @@ function App() {
         <form className="space-y-3" onSubmit={onSubmitHandler}>
           {renderFormInputList}
 
-          <div className="flex items-center space-x-1 my-3 flex-wrap">
-            {renderProductColor}
-          </div>
+          <div className="flex items-center space-x-1 my-3 flex-wrap">{renderProductColor}</div>
 
-          <div className="flex flex-wrap space-x-1">
-            {rendercolor}
-          </div>
+          <div className="flex flex-wrap space-x-1">{rendercolor}</div>
 
           <div className="flex items-center space-x-3">
             <Button className="bg-indigo-700 hover:bg-indigo-800">Submit</Button>
