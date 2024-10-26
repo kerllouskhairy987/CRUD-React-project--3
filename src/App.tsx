@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import ProductCard from "./components/ProductCard";
 import Modal from "./components/ui/Modal";
-import { colors, formInputsList, productList } from "./data";
+import { categories, colors, formInputsList, productList } from "./data";
 import Button from "./components/ui/Button";
 import { Input } from "@headlessui/react";
 import { IProduct } from "./Interfaces";
@@ -9,6 +9,7 @@ import { productValidation } from "./validation";
 import ErrorMassege from "./components/ErrorMassege";
 import CicleColor from "./components/CicleColor";
 import { v4 as uuid } from "uuid";
+import Select from "./components/ui/Select";
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
   const [tempColor, setTemColor] = useState<string[]>([]);
   const [errors, setErrors] = useState({ title: "", description: "", imageURL: "", price: "" }); // Save Error Msg IN This State 
   const [products, setProducts] = useState<IProduct[]>(productList); // عملت الاستيت دي عشان اعرف اضيف علي الداتا لان الداتا كنت عاملها امبورت من الملف علي طول
+  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
 
 
   // ** Handler ** //
@@ -75,7 +77,6 @@ function App() {
 
     */
     const errors = productValidation({ title, description, imageURL, price });
-    console.log(errors);
 
     // Handling the value of inputs 
     const hasErrorMsg = Object.values(errors).some(value => value === "") && Object.values(errors).every(value => value === "");
@@ -85,7 +86,7 @@ function App() {
       return;
     }
     // بدل م كنت بتبعت رساله لا دلوقتي اعملي ست ل ال برودكت و ابعت ال اي دي و ال كلرز
-    setProducts((prev) => [{ ...product, id: uuid(), colors: tempColor }, ...prev]);
+    setProducts((prev) => [{ ...product, id: uuid(), colors: tempColor, category: selectedCategory }, ...prev]);
     setProduct(defaultProductObj); // To empty the inputs
     setTemColor([]);               // To clear the circle color
     close();                       // To close the modal
@@ -133,6 +134,8 @@ function App() {
       <Modal isOpen={isOpen} close={close} title="ADD A NEW PRODUCT" >
         <form className="space-y-3" onSubmit={onSubmitHandler}>
           {renderFormInputList}
+
+          <Select selected={selectedCategory} setSelected={setSelectedCategory} />
 
           <div className="flex items-center space-x-1 my-3 flex-wrap">{renderProductColor}</div>
 
