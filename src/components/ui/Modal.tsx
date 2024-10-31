@@ -24,7 +24,7 @@ export default function Modal({ isOpen, close, children, title, description }: I
                                 {title}
                             </DialogTitle>}
 
-                            {description && <p className="mt-2 text-sm/6 text-white/50">{description}</p>}
+                            {description && <p className="mt-2 text-sm/6 font-normal text-gray-500">{description}</p>}
 
                             <div className="mt-4">{children}</div>
                         </DialogPanel>

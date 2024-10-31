@@ -10,19 +10,25 @@ interface IProps {
     OpenEditModal: () => void;
     idx: number;
     setProductToEditIdx: (value: number) => void;
+    openDeleteModal: () => void;
 }
 
-function ProductCard({ product, setProductToEdit, OpenEditModal, idx, setProductToEditIdx }: IProps) {
+function ProductCard({ product, setProductToEdit, OpenEditModal, idx, setProductToEditIdx, openDeleteModal }: IProps) {
     const { title, description, imageURL, price, colors, category } = product;
     // Map on circle colors
     const renderProductColor = colors.map(color => <CicleColor color={color} key={color} />)
-    
+
 
     //** -- Handler -- **//
     const onEdit = () => {
         setProductToEdit(product);
         OpenEditModal()
         setProductToEditIdx(idx)
+    }
+    
+    const onDelete = () => {
+        setProductToEdit(product);
+        openDeleteModal()
     }
 
     return (
@@ -36,11 +42,11 @@ function ProductCard({ product, setProductToEdit, OpenEditModal, idx, setProduct
 
             <div >
                 {
-                    renderProductColor.length !== 0? 
-                    <div className="flex items-center space-x-1 my-3 flex-wrap">{renderProductColor}</div>: 
-                    <p className="font-medium text-sm">Not Available Colors!</p>
+                    renderProductColor.length !== 0 ?
+                        <div className="flex items-center space-x-1 my-3 flex-wrap">{renderProductColor}</div> :
+                        <p className="font-medium text-sm">Not Available Colors!</p>
                 }
-                
+
 
                 <div className="flex items-center justify-between">
                     <span> ${price} </span>
@@ -52,7 +58,7 @@ function ProductCard({ product, setProductToEdit, OpenEditModal, idx, setProduct
 
                 <div className="flex space-x-2 items-center mt-5">
                     <Button className="bg-indigo-700" onClick={onEdit} width="w-full">EDIT</Button>
-                    <Button className="bg-red-700" width="w-full">DELETE</Button>
+                    <Button className="bg-red-700" width="w-full" onClick={onDelete}>DELETE</Button>
                 </div>
             </div>
 

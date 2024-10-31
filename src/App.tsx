@@ -11,6 +11,7 @@ import CicleColor from "./components/CicleColor";
 import { v4 as uuid } from "uuid";
 import Select from "./components/ui/Select";
 import { TypesNames } from "./Types/TypesNames";
+import toast, { Toaster } from 'react-hot-toast';  // React Toast [react hot toast]
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
   const [products, setProducts] = useState<IProduct[]>(productList); // عملت الاستيت دي عشان اعرف اضيف علي الداتا لان الداتا كنت عاملها امبورت من الملف علي طول
   const [isOpen, setIsOpen] = useState(false); // product modal
   const [isOpenEditModal, setIsOpenEditModal] = useState(false); // edit product modal
+  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false); // Delete product modal
   const [product, setProduct] = useState<IProduct>(defaultProductObj);
   const [productToEdit, setProductToEdit] = useState<IProduct>(defaultProductObj)  // save edit
   const [productToEditIdx, setProductToEditIdx] = useState<number>(0)  // save edit Idx
@@ -45,6 +47,9 @@ function App() {
 
   const openEditModal = () => setIsOpenEditModal(true)
   const closeEditModal = () => setIsOpenEditModal(false)
+
+  const openDeleteModal = () => setIsOpenDeleteModal(true)
+  const closeDeleteModal = () => setIsOpenDeleteModal(false)
   // For Product 
   const onChagneHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
@@ -81,6 +86,9 @@ function App() {
     setProduct(defaultProductObj);
     closeEditModal();
   }
+  const onCancelDelete = () => {
+    closeDeleteModal();
+  }
 
   const onSubmitHandler = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
@@ -115,6 +123,10 @@ function App() {
     setProduct(defaultProductObj); // To empty the inputs
     setTemColor([]);               // To clear the circle color
     close();                       // To close the modal
+
+    toast('Product Has Been Added 🖐', {
+      className: 'bg-black text-white',
+    })
   }
 
   const onSubmitEditHandler = (event: FormEvent<HTMLFormElement>): void => {
@@ -154,7 +166,20 @@ function App() {
     setProductToEdit(defaultProductObj);  // To empty the inputs
     setTemColor([]);                      // To clear the circle color
     closeEditModal();                     // To close the modal
-    
+
+    toast('Product Has Been Updated ✅', {
+      className: 'bg-black text-white',
+    })
+  }
+
+  const removeProductHandler = () => {
+    const filtered = products.filter(product => product.id !== productToEdit.id)
+    setProducts(filtered);
+    closeDeleteModal();
+
+    toast('Product Has Been Deleted 👍', {
+      className: 'bg-black text-white',
+    })
   }
 
   // ** Renders ** //
@@ -164,6 +189,7 @@ function App() {
       product={item}
       setProductToEdit={setProductToEdit}
       OpenEditModal={openEditModal}
+      openDeleteModal={openDeleteModal}
       idx={idx}
       setProductToEditIdx={setProductToEditIdx}
     />)
@@ -232,7 +258,7 @@ function App() {
         <form className="space-y-3" onSubmit={onSubmitHandler}>
           {renderFormInputList}
 
-          <Select selected={productToEdit.category} setSelected={(value) => setProductToEdit({...productToEdit, category: value})} />
+          <Select selected={productToEdit.category} setSelected={(value) => setProductToEdit({ ...productToEdit, category: value })} />
 
           <div className="flex items-center space-x-1 my-3 flex-wrap">{renderProductColor}</div>
 
@@ -254,8 +280,6 @@ function App() {
           {renderProductEditWithErrorMsg("imageURL", "Product image URL", "imageURL")}
           {renderProductEditWithErrorMsg("price", "Product Price", "price")}
 
-          {/* {renderFormInputList} */}
-
           <Select selected={selectedCategory} setSelected={setSelectedCategory} />
 
           <div className="flex items-center space-x-1 my-3 flex-wrap">{renderProductColor}</div>
@@ -268,6 +292,22 @@ function App() {
           </div>
         </form>
       </Modal>
+
+      {/* Delete Product Modal */}
+      <Modal
+        isOpen={isOpenDeleteModal}
+        close={closeDeleteModal}
+        title="Are you sure you want to remove this product from your store?"
+        description="Deleting this product will remove it permanently from your inventory. Any associated data, sales history, and other related information will also be deleted. Please make sure is the intended action."
+      >
+
+        <div className="flex items-center space-x-3">
+          <Button className="bg-red-700 hover:bg-red-800" onClick={removeProductHandler}>Yes, remove</Button>
+          <Button className="bg-gray-400 hover:bg-gray-500" onClick={onCancelDelete}>Cancel</Button>
+        </div>
+      </Modal>
+
+      <Toaster />
     </main >
   )
 }
