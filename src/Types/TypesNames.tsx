@@ -1,0 +1,1 @@
+export type TypesNames = "title" | "description" | "imageURL" | "price";
