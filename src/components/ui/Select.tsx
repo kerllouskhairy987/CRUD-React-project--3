@@ -32,7 +32,7 @@ const Select = ({selected, setSelected}: IProps) => {
                         <Listbox.Option
                             key={category.id}
                             value={category}
-                            className={({ active, selected }) =>
+                            className={({ active }) =>
                                 `relative cursor-default select-none py-2 pl-3 pr-9 ${
                                     active ? 'bg-indigo-600 text-white' : 'text-gray-900'
                                 }`

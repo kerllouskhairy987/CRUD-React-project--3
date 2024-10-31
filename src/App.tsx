@@ -157,7 +157,6 @@ function App() {
       setErrors(errors);
       return;
     }
-    console.log(hasErrorMsg);
 
     const updateProducts = [...products];
     updateProducts[productToEditIdx] = { ...productToEdit, colors: tempColor.concat(productToEdit.colors) };
