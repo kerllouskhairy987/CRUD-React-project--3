@@ -3,6 +3,7 @@ import { Listbox } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { categories } from '../../data';
 import { ICategory } from '../../Interfaces';
+import { memo } from 'react';
 
 interface IProps {
     selected: {name: string, imageURL: string};
@@ -63,4 +64,4 @@ const Select = ({selected, setSelected}: IProps) => {
     );
 }
 
-export default Select;
+export default memo(Select);

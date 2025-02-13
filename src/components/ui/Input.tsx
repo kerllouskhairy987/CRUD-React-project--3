@@ -1,9 +1,14 @@
-import { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes, memo } from "react";
 
-interface IProps extends InputHTMLAttributes<HTMLInputElement> { }
-
-function Input({ ...rest }: IProps) {
-    return <input {...rest} />
+interface IProps extends InputHTMLAttributes<HTMLInputElement> {
+    className?: string;
 }
 
-export default Input;
+function Input({ className, ...rest }: IProps) {
+    return <input
+        className={`className`}
+        {...rest}
+    />
+}
+
+export default memo(Input);

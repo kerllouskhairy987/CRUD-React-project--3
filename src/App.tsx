@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, memo, useCallback, useState } from "react";
 import ProductCard from "./components/ProductCard";
 import Modal from "./components/ui/Modal";
 import { categories, colors, formInputsList, productList } from "./data";
@@ -42,27 +42,21 @@ function App() {
 
 
   // ** Handler ** //
-  const open = () => setIsOpen(true)
-  const close = () => setIsOpen(false)
+  const open = useCallback(() => setIsOpen(true), []);
+  const close = useCallback(() => setIsOpen(false), []);
 
-  const openEditModal = () => setIsOpenEditModal(true)
-  const closeEditModal = () => setIsOpenEditModal(false)
+  const openEditModal = useCallback(() => setIsOpenEditModal(true), []);
+  const closeEditModal = useCallback(() => setIsOpenEditModal(false), []);
 
-  const openDeleteModal = () => setIsOpenDeleteModal(true)
-  const closeDeleteModal = () => setIsOpenDeleteModal(false)
+  const openDeleteModal = useCallback(() => setIsOpenDeleteModal(true), []);
+  const closeDeleteModal = useCallback(() => setIsOpenDeleteModal(false), [])
   // For Product 
-  const onChagneHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChagneHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
-    setProduct({
-      ...product,
-      [name]: value,
-    });
-    // to empty the validation when we write in the current input
-    setErrors({
-      ...errors,
-      [name]: "",
-    })
-  };
+    setProduct(prev => ({ ...prev, [name]: value }));
+
+    setErrors(prev => ({ ...prev, [name]: "" }))
+  }, []);
   // For Edit
   const onChagneEditHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
@@ -311,4 +305,4 @@ function App() {
   )
 }
 
-export default App;
+export default memo(App);

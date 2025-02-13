@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { IProduct } from "../Interfaces";
 import { txtSlicer } from "../Utils/function";
 import CicleColor from "./CicleColor";
@@ -66,4 +67,4 @@ function ProductCard({ product, setProductToEdit, OpenEditModal, idx, setProduct
     )
 }
 
-export default ProductCard;
+export default memo(ProductCard);
