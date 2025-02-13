@@ -12,6 +12,8 @@ import { v4 as uuid } from "uuid";
 import Select from "./components/ui/Select";
 import { TypesNames } from "./Types/TypesNames";
 import toast, { Toaster } from 'react-hot-toast';  // React Toast [react hot toast]
+import List from "./components/List";
+import ListVirtualization from "./components/ListVirtualization";
 
 
 function App() {
@@ -300,6 +302,9 @@ function App() {
         </div>
       </Modal>
 
+    <h2 className="text-center text-yellow-600 text-4xl font-bold mt-[100px]">List Virtualization From React Window</h2>
+      {/* <List /> */}
+      <ListVirtualization />
       <Toaster />
     </main >
   )
